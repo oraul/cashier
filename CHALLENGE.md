@@ -1,21 +1,27 @@
-Technical evaluation
+# CHALLENGE
+
+## Technical evaluation
 
 Objectives:
+
 - Evaluation of programming style
 - Evaluation of language knowledge
 - Evaluation of testing approach
 
 Technical requirements:
+
 - Use Ruby language (not Ruby on Rails)
 - Use TDD (Test-Driven Development) methodology
 - Use github as public repository
 - Use of DB is not required
 
 Deadline:
+
 - Assignment should be ready within 5 natural days of inbox reception
 - Assignment is completed when we receive the link to the repository
 
 Assignment:
+
 You are the lead programmer for a small chain of supermarkets. You are required to make a simple cashier function that adds products to a cart and displays the total price.
 
 You have the following test products registered:
@@ -29,9 +35,7 @@ You have the following test products registered:
 Special conditions:
 
 - The CEO is a big fan of buy-one-get-one-free offers and of green tea. He wants us to add a rule to do this.
-
 - The COO, though, likes low prices and wants people buying strawberries to get a price discount for bulk purchases. If you buy 3 or more strawberries, the price should drop to £4.50
-
 - The CTO is a coffee addict. If you buy 3 or more coffees, the price of all coffees should drop to two thirds of the original price.
 
 Our check-out can scan items in any order, and because the CEO and COO change their minds often, it needs to be flexible regarding our pricing rules.
