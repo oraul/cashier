@@ -2,6 +2,7 @@
 
 require 'simplecov'
 require 'factory_bot'
+require 'debug'
 
 require_relative 'support/factory_bot'
 

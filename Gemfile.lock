@@ -8,12 +8,18 @@ GEM
       tzinfo (~> 2.0)
     ast (2.4.2)
     concurrent-ruby (1.2.2)
+    debug (1.8.0)
+      irb (>= 1.5.0)
+      reline (>= 0.3.1)
     diff-lcs (1.5.0)
     docile (1.4.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    io-console (0.6.0)
+    irb (1.7.1)
+      reline (>= 0.3.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     minitest (5.18.1)
@@ -25,6 +31,8 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.8.1)
+    reline (0.3.5)
+      io-console (~> 0.5)
     rexml (3.2.5)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
@@ -78,6 +86,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  debug
   factory_bot
   rake
   rspec

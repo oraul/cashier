@@ -10,6 +10,7 @@ gem 'simplecov', require: false, group: :test
 
 group :development, :test do
   gem 'factory_bot'
+  gem 'debug'
   gem 'rspec'
   gem 'rubocop', require: false
   gem 'rubocop-rake', require: false
