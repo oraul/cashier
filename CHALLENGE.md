@@ -43,7 +43,8 @@ Our check-out can scan items in any order, and because the CEO and COO change th
 The interface to our checkout looks like this (shown in ruby):
 
 ```ruby
-co = Checkout.new(pricing_rules) co.scan(item)
+co = Checkout.new(pricing_rules)
+co.scan(item)
 co.scan(item)
 price = co.total
 ```
