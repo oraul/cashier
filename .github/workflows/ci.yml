@@ -19,3 +19,8 @@ jobs:
       run: bundle exec rubocop
     - name: Run tests
       run: bundle exec rspec
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage-report
+        path: coverage

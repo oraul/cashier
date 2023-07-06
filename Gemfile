@@ -6,6 +6,8 @@ ruby '3.2.2'
 
 gem 'rake'
 
+gem 'simplecov', require: false, group: :test
+
 group :development, :test do
   gem 'rspec'
   gem 'rubocop', require: false
