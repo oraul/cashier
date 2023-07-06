@@ -13,6 +13,6 @@ class Checkout
   end
 
   def total
-    "£#{@total_in_cents/100.0}"
+    "£#{@total_in_cents / 100.0}"
   end
 end
