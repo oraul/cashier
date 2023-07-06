@@ -1,18 +1,26 @@
 # frozen_string_literal: true
 
 class Checkout
-  attr_reader :total_in_cents
+  attr_reader :basket
 
   def initialize(pricing_rules)
     @pricing_rules = pricing_rules
-    @total_in_cents = 0
+    @basket = Hash.new(0)
   end
 
   def scan(item)
-    @total_in_cents += @pricing_rules[item].price_in_cents
+    return puts "ERROR: #{item} code is not found" unless @pricing_rules.key?(item)
+
+    @basket[item] += 1
   end
 
   def total
-    "£#{@total_in_cents / 100.0}"
+    total_in_cents = 0
+
+    @basket.each do |code, total|
+      total_in_cents += @pricing_rules[code].price_in_cents * total
+    end
+
+    "£#{total_in_cents / 100.0}"
   end
 end

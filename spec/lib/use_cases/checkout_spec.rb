@@ -16,21 +16,38 @@ RSpec.describe Checkout do
   end
 
   describe '.scan' do
-    context 'when scan coffee' do
+    context 'when scan green tea once' do
       before do
-        checkout.scan('GR1')
+        checkout.scan(green_tea.code)
       end
 
-      it { expect(checkout.total_in_cents).to eq(311) }
+      it { expect(checkout.basket).to eq(green_tea.code => 1) }
     end
 
-    context 'when scan two items' do
+    context 'when scan green tea twice' do
       before do
-        checkout.scan('GR1')
-        checkout.scan('SR1')
+        2.times { checkout.scan(green_tea.code) }
       end
 
-      it { expect(checkout.total_in_cents).to eq(811) }
+      it { expect(checkout.basket).to eq(green_tea.code => 2) }
+    end
+
+    context 'when scan coffee and green tea' do
+      before do
+        checkout.scan(coffee.code)
+        checkout.scan(green_tea.code)
+      end
+
+      it { expect(checkout.basket).to eq(coffee.code => 1, green_tea.code => 1) }
+    end
+
+    context 'when scan unknown code' do
+      it { expect { checkout.scan('unknown') }.to output(/ERROR: unknown code is not found/).to_stdout }
+
+      it do
+        checkout.scan('unknown')
+        expect(checkout.basket).to be_empty
+      end
     end
   end
 
