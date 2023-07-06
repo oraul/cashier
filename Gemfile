@@ -13,6 +13,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'rspec'
   gem 'rubocop', require: false
+  gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
 end

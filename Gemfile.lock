@@ -91,6 +91,7 @@ DEPENDENCIES
   rake
   rspec
   rubocop
+  rubocop-factory_bot
   rubocop-rake
   rubocop-rspec
   simplecov
