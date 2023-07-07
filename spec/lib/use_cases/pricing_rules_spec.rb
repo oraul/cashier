@@ -92,7 +92,7 @@ RSpec.describe PricingRules do
     context 'when total is 3' do
       let(:total) { 3 }
 
-      it { is_expected.to eq 2550 }
+      it { is_expected.to eq 1350 }
     end
   end
 

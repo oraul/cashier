@@ -6,9 +6,7 @@ module PricingRules
       ((total / 2) + (total % 2)) * price
     end,
     'SR1' => lambda do |total, price|
-      total_in_cents = total * price
-      total_in_cents -= 450  if total >= 3
-      total_in_cents
+      total >= 3 ? total * 450 : total * price
     end,
     'CF1' => lambda do |total, price|
       total_in_cents = total * price

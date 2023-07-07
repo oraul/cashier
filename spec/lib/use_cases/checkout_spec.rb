@@ -56,8 +56,32 @@ RSpec.describe Checkout do
   describe '.total' do
     subject(:total) { checkout.total }
 
-    before { checkout.scan('GR1') }
+    before do
+      basket.each { |product_code| checkout.scan(product_code) }
+    end
 
-    it { is_expected.to eq('£3.11') }
+    context 'when is scanned GR1,SR1,GR1,GR1,CF1' do
+      let(:basket) { %w[GR1 SR1 GR1 GR1 CF1] }
+
+      it { is_expected.to eq '£22.45' }
+    end
+
+    context 'when is scanned GR1,GR1' do
+      let(:basket) { %w[GR1 GR1] }
+
+      it { is_expected.to eq '£3.11' }
+    end
+
+    context 'when is scanned SR1,SR1,GR1,SR1' do
+      let(:basket) { %w[SR1 SR1 GR1 SR1] }
+
+      it { is_expected.to eq '£16.61' }
+    end
+
+    context 'when is scanned GR1,CF1,SR1,CF1,CF1' do
+      let(:basket) { %w[GR1 CF1 SR1 CF1 CF1] }
+
+      it { is_expected.to eq '£30.57' }
+    end
   end
 end
