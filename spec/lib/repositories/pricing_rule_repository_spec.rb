@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe ProductRepository do
-  subject(:product_repository) { described_class }
+RSpec.describe PricingRuleRepository do
+  subject(:pricing_rule_repository) { described_class }
 
   describe '#all' do
-    subject(:all) { product_repository.all }
+    subject(:all) { pricing_rule_repository.all }
 
     context 'with actual file' do
       let(:coffee) { build(:product_entity, :coffee) }
@@ -23,13 +23,13 @@ RSpec.describe ProductRepository do
     end
 
     context 'with invalid attributes' do
-      before { stub_const('ProductRepository::PRODUCTS', [{ foo: :bar }]) }
+      before { stub_const('PricingRuleRepository::PRODUCTS', [{ foo: :bar }]) }
 
       it { is_expected.to be_empty }
     end
 
     context 'with invalid product' do
-      before { stub_const('ProductRepository::PRODUCTS', [{ code: nil }]) }
+      before { stub_const('PricingRuleRepository::PRODUCTS', [{ code: nil }]) }
 
       it { is_expected.to be_empty }
     end

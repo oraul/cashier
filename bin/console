@@ -8,7 +8,7 @@ require 'irb'
 puts <<~EXAMPLE
   ============================================
   Interface:
-  products = ProductRepository.all
+  products = PricingRuleRepository.all
   pricing_rules = PricingRules.apply(products)
 
   checkout = Checkout.new(pricing_rules)

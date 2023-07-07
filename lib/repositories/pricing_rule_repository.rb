@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProductRepository
+class PricingRuleRepository
   PRODUCTS = JSON.parse(File.read('fixtures/products.json'), symbolize_names: true)
 
   def self.all(product_entity: ProductEntity)
