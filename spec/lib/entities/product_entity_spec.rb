@@ -8,7 +8,8 @@ RSpec.describe ProductEntity do
       {
         code: 'CF1',
         name: 'Coffee',
-        price_in_cents: 1123
+        price_in_cents: 1123,
+        rule: nil
       }
     end
 
