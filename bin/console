@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/cashier'
+
+require 'irb'
+
+puts <<-EXAMPLE
+============================================
+Interface:
+products = ProductRepository.all
+pricing_rules = PricingRules.apply(products)
+
+checkout = Checkout.new(pricing_rules)
+checkout.scan('GR1')
+checkout.scan('SR1')
+checkout.scan('CF1')
+checkout.total
+============================================
+EXAMPLE
+
+IRB.start
