@@ -8,11 +8,13 @@ RSpec.describe Checkout do
   let(:strawberries) { build(:product_entity, :strawberries) }
 
   let(:pricing_rules) do
-    {
-      coffee.code => coffee,
-      green_tea.code => green_tea,
-      strawberries.code => strawberries
-    }
+    PricingRules.apply(
+      {
+        coffee.code => coffee,
+        green_tea.code => green_tea,
+        strawberries.code => strawberries
+      }
+    )
   end
 
   describe '.scan' do

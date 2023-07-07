@@ -18,7 +18,7 @@ class Checkout
     total_in_cents = 0
 
     @basket.each do |code, total|
-      total_in_cents += @pricing_rules[code].price_in_cents * total
+      total_in_cents += @pricing_rules[code].calculate_in_cents(total)
     end
 
     "£#{total_in_cents / 100.0}"
