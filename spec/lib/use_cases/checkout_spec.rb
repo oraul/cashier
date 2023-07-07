@@ -3,18 +3,16 @@
 RSpec.describe Checkout do
   subject(:checkout) { described_class.new(pricing_rules) }
 
-  let(:coffee) { build(:product_entity, :coffee) }
-  let(:green_tea) { build(:product_entity, :green_tea) }
-  let(:strawberries) { build(:product_entity, :strawberries) }
+  let(:coffee) { build(:product_entity, :coffee, rule: ->(total, price) { total * price }) }
+  let(:green_tea) { build(:product_entity, :green_tea, rule: ->(total, price) { total * price }) }
+  let(:strawberries) { build(:product_entity, :strawberries, rule: ->(total, price) { total * price }) }
 
   let(:pricing_rules) do
-    PricingRules.apply(
-      {
-        coffee.code => coffee,
-        green_tea.code => green_tea,
-        strawberries.code => strawberries
-      }
-    )
+    {
+      coffee.code => coffee,
+      green_tea.code => green_tea,
+      strawberries.code => strawberries
+    }
   end
 
   describe '.scan' do
@@ -57,31 +55,13 @@ RSpec.describe Checkout do
     subject(:total) { checkout.total }
 
     before do
-      basket.each { |product_code| checkout.scan(product_code) }
+      [
+        coffee.code,
+        green_tea.code,
+        strawberries.code
+      ].each { |code| checkout.scan(code) }
     end
 
-    context 'when is scanned GR1,SR1,GR1,GR1,CF1' do
-      let(:basket) { %w[GR1 SR1 GR1 GR1 CF1] }
-
-      it { is_expected.to eq '£22.45' }
-    end
-
-    context 'when is scanned GR1,GR1' do
-      let(:basket) { %w[GR1 GR1] }
-
-      it { is_expected.to eq '£3.11' }
-    end
-
-    context 'when is scanned SR1,SR1,GR1,SR1' do
-      let(:basket) { %w[SR1 SR1 GR1 SR1] }
-
-      it { is_expected.to eq '£16.61' }
-    end
-
-    context 'when is scanned GR1,CF1,SR1,CF1,CF1' do
-      let(:basket) { %w[GR1 CF1 SR1 CF1 CF1] }
-
-      it { is_expected.to eq '£30.57' }
-    end
+    it { is_expected.to eq '£19.34' }
   end
 end

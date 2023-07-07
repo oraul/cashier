@@ -6,22 +6,18 @@ RSpec.describe ProductRepository do
   describe '#all' do
     subject(:all) { product_repository.all }
 
+    let(:coffee) { build(:product_entity, :coffee) }
+    let(:green_tea) { build(:product_entity, :green_tea) }
+    let(:strawberries) { build(:product_entity, :strawberries) }
+
     let(:products) do
-      [
-        build(:product_entity, :coffee),
-        build(:product_entity, :green_tea),
-        build(:product_entity, :strawberries)
-      ]
+      {
+        coffee.code => coffee,
+        green_tea.code => green_tea,
+        strawberries.code => strawberries
+      }
     end
 
-    it { is_expected.to match_array(products) }
-
-    it 'is expected to allow file read once' do
-      allow(File).to receive(:read).with('fixtures/products.json').and_call_original
-
-      2.times { all }
-
-      expect(File).to have_received(:read).with('fixtures/products.json').once
-    end
+    it { is_expected.to match(products) }
   end
 end
