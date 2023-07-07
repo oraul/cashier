@@ -1,0 +1,17 @@
+[
+  {
+    "code": "CF1",
+    "name": "Coffee",
+    "price_in_cents": 1123
+  },
+  {
+    "code": "GR1",
+    "name": "Green tea",
+    "price_in_cents": 311
+  },
+  {
+    "code": "SR1",
+    "name": "Strawberries",
+    "price_in_cents": 500
+  }
+]
