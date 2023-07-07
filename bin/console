@@ -1,21 +1,22 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative '../lib/cashier'
 
 require 'irb'
 
-puts <<-EXAMPLE
-============================================
-Interface:
-products = ProductRepository.all
-pricing_rules = PricingRules.apply(products)
+puts <<~EXAMPLE
+  ============================================
+  Interface:
+  products = ProductRepository.all
+  pricing_rules = PricingRules.apply(products)
 
-checkout = Checkout.new(pricing_rules)
-checkout.scan('GR1')
-checkout.scan('SR1')
-checkout.scan('CF1')
-checkout.total
-============================================
+  checkout = Checkout.new(pricing_rules)
+  checkout.scan('GR1')
+  checkout.scan('SR1')
+  checkout.scan('CF1')
+  checkout.total
+  ============================================
 EXAMPLE
 
 IRB.start
