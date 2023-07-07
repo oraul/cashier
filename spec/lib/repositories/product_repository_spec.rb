@@ -6,18 +6,32 @@ RSpec.describe ProductRepository do
   describe '#all' do
     subject(:all) { product_repository.all }
 
-    let(:coffee) { build(:product_entity, :coffee) }
-    let(:green_tea) { build(:product_entity, :green_tea) }
-    let(:strawberries) { build(:product_entity, :strawberries) }
+    context 'with actual file' do
+      let(:coffee) { build(:product_entity, :coffee) }
+      let(:green_tea) { build(:product_entity, :green_tea) }
+      let(:strawberries) { build(:product_entity, :strawberries) }
 
-    let(:products) do
-      {
-        coffee.code => coffee,
-        green_tea.code => green_tea,
-        strawberries.code => strawberries
-      }
+      let(:products) do
+        {
+          coffee.code => coffee,
+          green_tea.code => green_tea,
+          strawberries.code => strawberries
+        }
+      end
+
+      it { is_expected.to match(products) }
     end
 
-    it { is_expected.to match(products) }
+    context 'with invalid attributes' do
+      before { stub_const('ProductRepository::PRODUCTS', [{ foo: :bar }]) }
+
+      it { is_expected.to be_empty }
+    end
+
+    context 'with invalid product' do
+      before { stub_const('ProductRepository::PRODUCTS', [{ code: nil }]) }
+
+      it { is_expected.to be_empty }
+    end
   end
 end
