@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rubygems'
+require 'json'
 
 require_relative 'entities/product_entity'
 require_relative 'repositories/product_repository'
