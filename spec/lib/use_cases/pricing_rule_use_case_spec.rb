@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe PricingRules do
+RSpec.describe PricingRuleUseCase do
   subject(:pricing_rules) { described_class }
 
   describe '.apply' do

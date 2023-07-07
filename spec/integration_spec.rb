@@ -4,7 +4,7 @@ RSpec.describe 'Integration' do
   subject(:total) { checkout.total }
 
   let(:products) { PricingRuleRepository.all }
-  let(:pricing_rules) { PricingRules.apply(products) }
+  let(:pricing_rules) { PricingRuleUseCase.apply(products) }
   let(:checkout) { Checkout.new(pricing_rules) }
 
   before do

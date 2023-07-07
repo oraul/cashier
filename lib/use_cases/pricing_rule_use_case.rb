@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PricingRules
+module PricingRuleUseCase
   RULES = {
     'GR1' => lambda do |total, price|
       ((total / 2) + (total % 2)) * price
