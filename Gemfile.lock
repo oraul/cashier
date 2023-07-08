@@ -29,7 +29,6 @@ GEM
       racc
     racc (1.7.1)
     rainbow (3.1.1)
-    rake (13.0.6)
     regexp_parser (2.8.1)
     reline (0.3.5)
       io-console (~> 0.5)
@@ -64,8 +63,6 @@ GEM
       rubocop (~> 1.41)
     rubocop-factory_bot (2.23.1)
       rubocop (~> 1.33)
-    rubocop-rake (0.6.0)
-      rubocop (~> 1.0)
     rubocop-rspec (2.22.0)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
@@ -88,11 +85,9 @@ PLATFORMS
 DEPENDENCIES
   debug
   factory_bot
-  rake
   rspec
   rubocop
   rubocop-factory_bot
-  rubocop-rake
   rubocop-rspec
   simplecov
 
