@@ -14,4 +14,4 @@ RUN bundle install
 
 COPY . ${APP_PATH}
 
-CMD ["bundle", "exec", "rake", "run"]
+CMD ["bin/console"]
