@@ -64,7 +64,7 @@ RSpec.describe PricingRuleUseCase do
       end
 
       it 'is expected to log error on invalid product' do
-        message = 'PricingRuleUseCase.call: Product#4 is invalid '\
+        message = 'PricingRuleUseCase.call: Product#4 is invalid ' \
                   '({:code=>["is empty"], :name=>["is empty"], :price_in_cents=>["is not integer"]})'
 
         allow(described_class).to receive(:log_error).with(message)
