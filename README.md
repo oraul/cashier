@@ -24,6 +24,15 @@ Tests
 docker-compose run --rm app bundle exec rspec spec
 ```
 
+## Logs
+
+You can check the logs:
+
+```sh
+tail -f log/development.log
+tail -f log/test.log
+```
+
 ## Explanation
 
 Products:
