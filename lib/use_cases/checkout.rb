@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Checkout
+  include Loggable
+
   attr_reader :basket
 
   def initialize(pricing_rules)
@@ -9,7 +11,7 @@ class Checkout
   end
 
   def scan(item)
-    return puts "ERROR: #{item} code is not found" unless @pricing_rules.key?(item)
+    return log_error("#{item} code is not found") unless @pricing_rules.key?(item)
 
     @basket[item] += 1
   end

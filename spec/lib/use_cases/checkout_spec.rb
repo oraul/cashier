@@ -41,11 +41,19 @@ RSpec.describe Checkout do
       it { expect(checkout.basket).to eq(coffee.code => 1, green_tea.code => 1) }
     end
 
-    context 'when scan unknown code' do
-      it { expect { checkout.scan('unknown') }.to output(/ERROR: unknown code is not found/).to_stdout }
+    context 'when scan not_found code' do
+      it 'is expected to log error' do
+        message = 'NOT_FOUND code is not found'
+
+        allow(LoggerAdapter).to receive(:error).with(message)
+
+        checkout.scan('NOT_FOUND')
+
+        expect(LoggerAdapter).to have_received(:error).with(message)
+      end
 
       it do
-        checkout.scan('unknown')
+        checkout.scan('NOT_FOUND')
         expect(checkout.basket).to be_empty
       end
     end
