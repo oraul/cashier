@@ -22,7 +22,7 @@ module PricingRuleUseCase
   end
 
   def self.call(product_repository: ProductRepository)
-    product_repository.all.each_with_object({}).with_index do |(product, memo), index|
+    pricing_rules = product_repository.all.each_with_object({}).with_index do |(product, memo), index|
       if product.valid?
         product.rule = RULES[product.code] || DEFAULT_RULE
         memo[product.code] = product
@@ -30,5 +30,9 @@ module PricingRuleUseCase
         log_error("PricingRuleUseCase.call: Product##{index} is invalid (#{product.errors})")
       end
     end
+
+    log_warn('PricingRuleUseCase.call: Pricing rules not found') if pricing_rules.empty?
+
+    pricing_rules
   end
 end

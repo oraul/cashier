@@ -74,6 +74,22 @@ RSpec.describe PricingRuleUseCase do
         expect(described_class).to have_received(:log_error).with(message)
       end
     end
+
+    context 'when is empty' do
+      let(:products) { [] }
+
+      it { is_expected.to eq({}) }
+
+      it 'is expected to log warn saying it\'s not found' do
+        message = 'PricingRuleUseCase.call: Pricing rules not found'
+
+        allow(described_class).to receive(:log_warn).with(message)
+
+        call
+
+        expect(described_class).to have_received(:log_warn).with(message)
+      end
+    end
   end
 
   describe 'constant RULES' do
