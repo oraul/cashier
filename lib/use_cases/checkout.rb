@@ -25,6 +25,6 @@ class Checkout
 
     log_warn('Checkout.total: No products have been scanned') if @basket.empty?
 
-    sprintf('£%.2f', total_in_cents / 100.0)
+    format('£%.2f', total_in_cents / 100.0)
   end
 end
