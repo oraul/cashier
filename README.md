@@ -7,14 +7,21 @@
 - Ruby 3.2.2
 - RSpec
 - FactoryBot
+- SimpleCov
 - Github Actions
 
 ## Execution
 
-When you execute the command above, it will runs bin/console
+When you execute the command bellow, it will runs bin/console
 
 ```
 docker-compose run --rm app
+```
+
+Tests
+
+```
+docker-compose run --rm app bundle exec rspec spec
 ```
 
 ## Explanation
