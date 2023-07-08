@@ -18,11 +18,15 @@ When you execute the command bellow, it will runs bin/console
 docker-compose run --rm app
 ```
 
-Tests
+## Tests
+
+You can execute the rspec command:
 
 ```
 docker-compose run --rm app bundle exec rspec spec
 ```
+
+Every CI saves a code coverage artifact on github actions summary
 
 ## Logs
 
