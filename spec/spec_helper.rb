@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['CASHIER_ENV'] = 'test'
+
 require 'simplecov'
 require 'factory_bot'
 require 'debug'
