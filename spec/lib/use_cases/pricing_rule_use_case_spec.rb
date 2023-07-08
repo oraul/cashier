@@ -3,10 +3,12 @@
 RSpec.describe PricingRuleUseCase do
   subject(:pricing_rules) { described_class }
 
-  describe '.apply' do
-    subject(:apply) { described_class.apply(products:) }
+  describe '.call' do
+    subject(:call) { described_class.call(product_repository:) }
 
-    before { apply }
+    before { call }
+
+    let(:product_repository) { spy(ProductRepository, all: products) }
 
     let(:products) do
       [

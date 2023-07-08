@@ -19,8 +19,8 @@ module PricingRuleUseCase
     total * price
   end
 
-  def self.apply(products:)
-    products.each_with_object({}) do |product, memo|
+  def self.call(product_repository: ProductRepository)
+    product_repository.all.each_with_object({}) do |product, memo|
       product.rule = RULES[product.code] || DEFAULT_RULE
       memo[product.code] = product
     end

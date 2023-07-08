@@ -1,8 +1,7 @@
 # Cashier
 
 ```ruby
-products = ProductRepository.all
-pricing_rules = PricingRuleUseCase.apply(products:)
+pricing_rules = PricingRuleUseCase.call
 
 checkout = Checkout.new(pricing_rules)
 checkout.scan('GR1')
