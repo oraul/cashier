@@ -43,7 +43,7 @@ RSpec.describe Checkout do
 
     context 'when scan not_found code' do
       it 'is expected to log error' do
-        message = 'NOT_FOUND code is not found'
+        message = 'Checkout.scan: NOT_FOUND code is not found'
 
         allow(LoggerAdapter).to receive(:error).with(message)
 
@@ -62,14 +62,30 @@ RSpec.describe Checkout do
   describe '.total' do
     subject(:total) { checkout.total }
 
-    before do
-      [
-        coffee.code,
-        green_tea.code,
-        strawberries.code
-      ].each { |code| checkout.scan(code) }
+    context 'with scanned products' do
+      before do
+        [
+          coffee.code,
+          green_tea.code,
+          strawberries.code
+        ].each { |code| checkout.scan(code) }
+      end
+
+      it { is_expected.to eq '£19.34' }
     end
 
-    it { is_expected.to eq '£19.34' }
+    context 'without products' do
+      it { is_expected.to eq '£0.00' }
+
+      it 'is expected to log warn' do
+        message = 'Checkout.total: No products have been scanned'
+
+        allow(LoggerAdapter).to receive(:warn).with(message)
+
+        total
+
+        expect(LoggerAdapter).to have_received(:warn).with(message)
+      end
+    end
   end
 end

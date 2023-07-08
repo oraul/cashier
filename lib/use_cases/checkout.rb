@@ -11,7 +11,7 @@ class Checkout
   end
 
   def scan(item)
-    return log_error("#{item} code is not found") unless @pricing_rules.key?(item)
+    return log_error("Checkout.scan: #{item} code is not found") unless @pricing_rules.key?(item)
 
     @basket[item] += 1
   end
@@ -23,6 +23,8 @@ class Checkout
       total_in_cents += @pricing_rules[code].calculate_in_cents(total)
     end
 
-    "£#{total_in_cents / 100.0}"
+    log_warn('Checkout.total: No products have been scanned') if @basket.empty?
+
+    sprintf('£%.2f', total_in_cents / 100.0)
   end
 end
