@@ -15,11 +15,14 @@ module PricingRuleUseCase
     end
   }.freeze
 
-  def self.apply(products)
-    products.each do |_code, product|
-      product.rule = RULES[product.code]
-    end
+  DEFAULT_RULE = lambda do |total, price|
+    total * price
+  end
 
-    products
+  def self.apply(products:)
+    products.each_with_object({}) do |product, memo|
+      product.rule = RULES[product.code] || DEFAULT_RULE
+      memo[product.code] = product
+    end
   end
 end
