@@ -8,7 +8,7 @@ RSpec.describe PricingRuleUseCase do
 
     before { call }
 
-    let(:product_repository) { spy(ProductRepository, all: products) }
+    let(:product_repository) { class_double(ProductRepository, all: products) }
 
     let(:products) do
       [
@@ -48,109 +48,60 @@ RSpec.describe PricingRuleUseCase do
     it { is_expected.to be_a(Proc) }
   end
 
+  shared_examples 'calculations and results' do |comparisons|
+    comparisons.each do |(total, result)|
+      context "when item total is #{total} and price is 1000" do
+        it { expect(subject.call(total, 1000)).to eq result }
+      end
+    end
+  end
+
   describe 'Default rule' do
-    subject(:rule) { pricing_rules::DEFAULT_RULE.call(total, 1000) }
+    subject(:rule) { pricing_rules::DEFAULT_RULE }
 
-    context 'when total is 0' do
-      let(:total) { 0 }
-
-      it { is_expected.to eq 0 }
-    end
-
-    context 'when total is 1' do
-      let(:total) { 1 }
-
-      it { is_expected.to eq 1000 }
-    end
-
-    context 'when total is 2' do
-      let(:total) { 2 }
-
-      it { is_expected.to eq 2000 }
-    end
-
-    context 'when total is 3' do
-      let(:total) { 3 }
-
-      it { is_expected.to eq 3000 }
-    end
+    include_examples 'calculations and results', [
+      [0, 0],
+      [1, 1000],
+      [2, 2000],
+      [3, 3000],
+      [4, 4000],
+      [5, 5000]
+    ]
   end
 
   describe 'GR1 rule' do
-    subject(:rule) { pricing_rules::RULES['GR1'].call(total, 1000) }
+    subject(:rule) { pricing_rules::RULES['GR1'] }
 
-    context 'when total is 0' do
-      let(:total) { 0 }
-
-      it { is_expected.to eq 0 }
-    end
-
-    context 'when total is 2' do
-      let(:total) { 2 }
-
-      it { is_expected.to eq 1000 }
-    end
-
-    context 'when total is 3' do
-      let(:total) { 3 }
-
-      it { is_expected.to eq 2000 }
-    end
-
-    context 'when total is 4' do
-      let(:total) { 4 }
-
-      it { is_expected.to eq 2000 }
-    end
-
-    context 'when total is 5' do
-      let(:total) { 5 }
-
-      it { is_expected.to eq 3000 }
-    end
+    include_examples 'calculations and results', [
+      [0, 0],
+      [2, 1000],
+      [3, 2000],
+      [4, 2000],
+      [5, 3000]
+    ]
   end
 
   describe 'SR1 rule' do
-    subject(:rule) { pricing_rules::RULES['SR1'].call(total, 1000) }
+    subject(:rule) { pricing_rules::RULES['SR1'] }
 
-    context 'when total is 0' do
-      let(:total) { 0 }
-
-      it { is_expected.to eq 0 }
-    end
-
-    context 'when total is 2' do
-      let(:total) { 2 }
-
-      it { is_expected.to eq 2000 }
-    end
-
-    context 'when total is 3' do
-      let(:total) { 3 }
-
-      it { is_expected.to eq 1350 }
-    end
+    include_examples 'calculations and results', [
+      [0, 0],
+      [2, 2000],
+      [3, 1350],
+      [4, 1800],
+      [5, 2250]
+    ]
   end
 
   describe 'CF1 rule' do
-    subject(:rule) { pricing_rules::RULES['CF1'].call(total, 1000) }
+    subject(:rule) { pricing_rules::RULES['CF1'] }
 
-    context 'when total is 0' do
-      let(:total) { 0 }
-
-      it { is_expected.to eq 0 }
-    end
-
-    context 'when total is 2' do
-      let(:total) { 2 }
-
-      it { is_expected.to eq 2000 }
-    end
-
-    context 'when total is 3' do
-      let(:total) { 3 }
-
-      it { is_expected.to eq 2000 }
-    end
+    include_examples 'calculations and results', [
+      [0, 0],
+      [2, 2000],
+      [3, 2000],
+      [4, 2666],
+      [5, 3333]
+    ]
   end
 end
