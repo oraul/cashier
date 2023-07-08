@@ -22,5 +22,12 @@ FactoryBot.define do
       price_in_cents { 1123 }
       rule { nil }
     end
+
+    trait(:default) do
+      code { 'DF1' }
+      name { 'Default Product' }
+      price_in_cents { 1000 }
+      rule { nil }
+    end
   end
 end

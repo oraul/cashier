@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module PricingRuleUseCase
+  extend Loggable
+
   RULES = {
     'GR1' => lambda do |total, price|
       ((total / 2) + (total % 2)) * price
@@ -20,9 +22,13 @@ module PricingRuleUseCase
   end
 
   def self.call(product_repository: ProductRepository)
-    product_repository.all.each_with_object({}) do |product, memo|
-      product.rule = RULES[product.code] || DEFAULT_RULE
-      memo[product.code] = product
+    product_repository.all.each_with_object({}).with_index do |(product, memo), index|
+      if product.valid?
+        product.rule = RULES[product.code] || DEFAULT_RULE
+        memo[product.code] = product
+      else
+        log_error("PricingRuleUseCase.call: Product##{index} is invalid (#{product.errors})")
+      end
     end
   end
 end

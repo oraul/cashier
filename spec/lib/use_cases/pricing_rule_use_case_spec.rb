@@ -3,36 +3,76 @@
 RSpec.describe PricingRuleUseCase do
   subject(:pricing_rules) { described_class }
 
-  describe '.call' do
-    subject(:call) { described_class.call(product_repository:) }
+  shared_examples 'calculations and results' do |comparisons|
+    comparisons.each do |(total, result)|
+      context "when item total is #{total} and price is 1000" do
+        it { expect(subject.call(total, 1000)).to eq result }
+      end
+    end
+  end
 
-    before { call }
+  describe '.call' do
+    subject(:call) { pricing_rules.call(product_repository:) }
 
     let(:product_repository) { class_double(ProductRepository, all: products) }
 
     let(:products) do
       [
-        instance_spy(ProductEntity, code: 'CF1'),
-        instance_spy(ProductEntity, code: 'GR1'),
-        instance_spy(ProductEntity, code: 'SR1'),
-        instance_spy(ProductEntity, code: 'UNKNOWN')
+        build(:product_entity, :coffee),
+        build(:product_entity, :green_tea),
+        build(:product_entity, :strawberries),
+        build(:product_entity, :default),
+        build(:product_entity)
       ]
     end
 
-    it 'is expected to set rule CF1 on coffee' do
-      expect(products[0]).to have_received(:rule=).with(pricing_rules::RULES['CF1'])
+    let(:result) do
+      {
+        products[0].code => products[0],
+        products[1].code => products[1],
+        products[2].code => products[2],
+        products[3].code => products[3]
+      }
     end
 
-    it 'is expected to set rule GR1 on green tea' do
-      expect(products[1]).to have_received(:rule=).with(pricing_rules::RULES['GR1'])
+    it { is_expected.to eq result }
+
+    context 'when is called' do
+      before { call }
+
+      it 'is expected to set rule CF1 on coffee' do
+        expect(products[0].rule).to eq pricing_rules::RULES['CF1']
+      end
+
+      it 'is expected to set rule GR1 on green tea' do
+        expect(products[1].rule).to eq pricing_rules::RULES['GR1']
+      end
+
+      it 'is expected to set rule SR1 on strawberries' do
+        expect(products[2].rule).to eq pricing_rules::RULES['SR1']
+      end
+
+      it 'is expected to set default rule on default' do
+        expect(products[3].rule).to eq pricing_rules::DEFAULT_RULE
+      end
     end
 
-    it 'is expected to set rule SR1 on strawberries' do
-      expect(products[2]).to have_received(:rule=).with(pricing_rules::RULES['SR1'])
-    end
+    context 'with invalid product' do
+      it 'is not expected to receive rules on invalid product' do
+        call
+        expect(products[4].rule).to be_nil
+      end
 
-    it 'is expected to not set rule on unknown' do
-      expect(products[3]).to have_received(:rule=).with(pricing_rules::DEFAULT_RULE)
+      it 'is expected to log error on invalid product' do
+        message = 'PricingRuleUseCase.call: Product#4 is invalid '\
+                  '({:code=>["is empty"], :name=>["is empty"], :price_in_cents=>["is not integer"]})'
+
+        allow(described_class).to receive(:log_error).with(message)
+
+        call
+
+        expect(described_class).to have_received(:log_error).with(message)
+      end
     end
   end
 
@@ -46,14 +86,6 @@ RSpec.describe PricingRuleUseCase do
     subject(:default_rules) { pricing_rules::DEFAULT_RULE }
 
     it { is_expected.to be_a(Proc) }
-  end
-
-  shared_examples 'calculations and results' do |comparisons|
-    comparisons.each do |(total, result)|
-      context "when item total is #{total} and price is 1000" do
-        it { expect(subject.call(total, 1000)).to eq result }
-      end
-    end
   end
 
   describe 'Default rule' do
